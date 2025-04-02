@@ -1,0 +1,48 @@
+{
+    "glycemia": {
+        "text": "Glycemia is the presence or level of glucose in the blood. Derived words include:\nDysglycemia, an abnormal level of glucose in the blood\nAglycemia, the absence of glucose in the blood\nHyperglycemia, an abnormally high level of glucose in the blood\nHypoglycemia, an abnormally low level of glucose in the blood\nEuglycemia or normoglycemia, a normal level of glucose in the blood\nGlycemic, relating to glycemia",
+        "links": {
+            "level": "https://en.wikipedia.org/wiki/Blood_sugar_level",
+            "Dysglycemia": "https://en.wikipedia.org/wiki/Dysglycemia",
+            "Hyperglycemia": "https://en.wikipedia.org/wiki/Hyperglycemia",
+            "Hypoglycemia": "https://en.wikipedia.org/wiki/Hypoglycemia",
+            "Glycemic": "https://en.wikipedia.org/wiki/Glycemic"
+        }
+    },
+    "estrogen": {
+        "text": "Estrogen (also spelled oestrogen in British English; see spelling differences) is a category of sex hormone responsible for the development and regulation of the female reproductive system and secondary sex characteristics. There are three major endogenous estrogens that have estrogenic hormonal activity: estrone (E1), estradiol (E2), and estriol (E3). Estradiol, an estrane, is the most potent and prevalent. Another estrogen called estetrol (E4) is produced only during pregnancy.",
+        "links": {
+            "British English": "https://en.wikipedia.org/wiki/British_English",
+            "see spelling differences": "https://en.wikipedia.org/wiki/American_and_British_English_spelling_differences#ae_and_oe",
+            "sex hormone": "https://en.wikipedia.org/wiki/Sex_steroid",
+            "female reproductive system": "https://en.wikipedia.org/wiki/Female_reproductive_system",
+            "secondary sex characteristics": "https://en.wikipedia.org/wiki/Secondary_sex_characteristic",
+            "endogenous": "https://en.wikipedia.org/wiki/Endogeny_(biology)",
+            "estrone": "https://en.wikipedia.org/wiki/Estrone",
+            "estradiol": "https://en.wikipedia.org/wiki/Estradiol",
+            "estriol": "https://en.wikipedia.org/wiki/Estriol",
+            "estrane": "https://en.wikipedia.org/wiki/Estrane",
+            "estetrol": "https://en.wikipedia.org/wiki/Estetrol"
+        }
+    },
+    "testosterone": {
+        "text": "Testosterone is the primary male sex hormone and androgen in males. In humans, testosterone plays a key role in the development of male reproductive tissues such as testicles and prostate, as well as promoting secondary sexual characteristics such as increased muscle and bone mass, and the growth of body hair. It is associated with increased aggression, sex drive, dominance, courtship display, and a wide range of behavioral characteristics. In addition, testosterone in both sexes is involved in health and well-being, where it has a significant effect on overall mood, cognition, social and sexual behavior, metabolism and energy output, the cardiovascular system, and in the prevention of osteoporosis. Insufficient levels of testosterone in men may lead to abnormalities including frailty, accumulation of adipose fat tissue within the body, anxiety and depression, sexual performance issues, and bone loss.",
+        "links": {
+            "sex hormone": "https://en.wikipedia.org/wiki/Sex_hormone",
+            "androgen": "https://en.wikipedia.org/wiki/Androgen",
+            "males": "https://en.wikipedia.org/wiki/Male",
+            "male reproductive": "https://en.wikipedia.org/wiki/Male_reproductive_system",
+            "testicles": "https://en.wikipedia.org/wiki/Testicle",
+            "prostate": "https://en.wikipedia.org/wiki/Prostate",
+            "secondary sexual characteristics": "https://en.wikipedia.org/wiki/Secondary_sexual_characteristic",
+            "muscle": "https://en.wikipedia.org/wiki/Muscle",
+            "bone": "https://en.wikipedia.org/wiki/Bone",
+            "body hair": "https://en.wikipedia.org/wiki/Androgenic_hair",
+            "aggression": "https://en.wikipedia.org/wiki/Aggression",
+            "sex drive": "https://en.wikipedia.org/wiki/Sex_drive",
+            "dominance": "https://en.wikipedia.org/wiki/Dominance_hierarchy",
+            "courtship display": "https://en.wikipedia.org/wiki/Courtship_display",
+            "osteoporosis": "https://en.wikipedia.org/wiki/Osteoporosis"
+        }
+    }
+}
