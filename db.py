@@ -2,12 +2,15 @@ import google.auth
 from google.cloud import bigquery
 import os
 import gcpSQL
+import scrapper
 import pandas as pd
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\roman\Documents\code\scraper\key.json"
 
 credentials, project = google.auth.default()
 client = bigquery.Client(credentials=credentials, location='europe-west9')
 instanceConnectionName = 'idyllic-silo-271809:europe-west9:db-1'
+projectId = client.project
+location = 'europe-west9'
 
 def getDataframe(table: bigquery.Table):
     QUERY = (f'SELECT * FROM `{table}`')
@@ -22,7 +25,7 @@ def loadDataframe(dataframe: pd.DataFrame, destination:bigquery.Table):
     except:
         print(f'Failed to load dataframe into {destination.friendly_name}')
 
-def getDatasetId(client: bigquery.Client):
+def getDatasetId():
     projectId = client.project
     
     datasets = list(client.list_datasets())  # Make an API request.
@@ -40,31 +43,57 @@ def getDatasetId(client: bigquery.Client):
     print(f'Using {datasetId}')
     return datasetId
 
-projectId = client.project
-location = 'europe-west9'
-datasetId = getDatasetId(client)
+datasetId = getDatasetId()
+schema = [
+    bigquery.SchemaField('parametername', 'string', mode="REQUIRED"),
+    bigquery.SchemaField('content', 'string'),
+    bigquery.SchemaField('links', 'string', 'REPEATED')
+    ]
 
+tableName = 'bloodwork'
 data = gcpSQL.getDataFromCloudSql()
-for tableName in data:
-    getTables = client.list_tables(f'{projectId}.{datasetId}')
-    tablesAlreadyCreated = list(map(lambda table: table.table_id, getTables))
-    table = bigquery.Table(f'{projectId}.{datasetId}.{tableName}')
-    dataframe: pd.DataFrame = data[tableName]
-    
-    if not tableName in tablesAlreadyCreated:
-        print(f'Creating {tableName}')
-        client.create_table(table)
-        loadDataframe(dataframe, table)
-    else:
-        print(f'Skipping table {tableName}. It exists already')
 
-        preexistingData = getDataframe(table)
-        diffData = pd.concat([dataframe,preexistingData]).drop_duplicates(keep=False)
-    
-        if diffData.empty:
-            print(f'{tableName} is already synced')
-        else:
-            loadDataframe(diffData, table)
-            print(f'loaded {diffData} into {tableName}')
+getTables = client.list_tables(f'{projectId}.{datasetId}')
+tablesAlreadyCreated = list(map(lambda table: table.table_id, getTables))
+table = bigquery.Table(f'{projectId}.{datasetId}.{tableName}', schema=schema)
+dataframe: pd.DataFrame = data[tableName]
+dfParameterName = list(dataframe['parametername'])
+parameterToAdd = dfParameterName if dfParameterName else []
+parameterToRemove = []
 
-    #if data updated!!!
+if not tableName in tablesAlreadyCreated:
+    print(f'Creating {tableName}')
+    client.create_table(table)
+else:
+    bqParameterName = list(getDataframe(table)['parametername'])
+    parameterToAdd = list(set(dfParameterName)-set(bqParameterName))
+    parameterToRemove = list(set(bqParameterName)-set(dfParameterName))
+
+if parameterToAdd:
+    wikiData = scrapper.main(pages=parameterToAdd)
+    data = []
+    for i in range(len(parameterToAdd)):
+        wiki = []
+        wiki.append(parameterToAdd[i])
+        wiki.append(wikiData[parameterToAdd[i]]['text'])
+        wiki.append(list(wikiData[parameterToAdd[i]]['links']))
+        data.append(wiki)
+ 
+    for i in range(len(parameterToAdd)):
+        print(data[i], tuple(data[i]))
+        query = f"insert into {table} values {tuple(data[i])} "
+        res = client.query(query)
+        if res.errors:
+            print(res.error_result)
+    print(f'loaded {parameterToAdd} into {tableName}')
+
+if parameterToRemove:
+    for i in parameterToRemove:
+        res = client.query(f"delete from {table} where {schema[0].name} like '{i}'")
+        if res.errors:
+            print(res.error_result)
+    print(f'deleted {parameterToRemove} from {table}')
+
+if not parameterToAdd and not parameterToRemove:
+    print(f'{tableName} is synced')
+

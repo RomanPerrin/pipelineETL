@@ -5,7 +5,8 @@ import regex
 from bs4 import BeautifulSoup
 
 def main(linkPrefix = 'https://en.wikipedia.org', pages = ['glycemia', 'estrogen', 'testosterone'], dir = "", save=False):
-
+    if type(pages) != list:
+        pages = [pages]
     data = getWikiData(linkPrefix, pages)
 
     if save:
